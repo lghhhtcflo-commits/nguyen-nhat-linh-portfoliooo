@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <!-- Chosen Palette: Warm Slate & Deep Navy with Emerald Highlights -->
+    <!-- Application Structure Plan: 
+        1. Hero & Profile Snapshot: High-impact introduction, key statistics cards (3.69 GPA, 6.5 IELTS, 3 Yrs Exp), quick contact action.
+        2. Navigation Bar: Sticky header for seamless section jumping (Tổng quan, Học vấn & CC, Kinh nghiệm & Kết quả, Phương pháp, Lộ trình Tương tác, Đánh giá HR).
+        3. Academic & Certification Hub: Interactive cards detailing AJC academic standing and language proficiency tests (IELTS & Aptis).
+        4. Interactive Impact Dashboard: Dynamic Chart.js visualizations showing average score improvements (Before vs After) and score breakdown across Grade levels.
+        5. Teaching Methodology & Framework: Tabbed view breaking down the 3 core pillars (Customized Lesson Plan, Test Matrix Alignment, Parent Communication).
+        6. Interactive Study Roadmap Builder: Interactive widget allowing parents to select student level (Cấp 1 / Cấp 2 / Lớp 9 Ôn thi) and goal to instantly render a tailored teaching plan.
+        7. HR Review & CV Strategy: Summary of ATS optimizations, color choices, and tips for parents & tutoring agencies.
+        Why this structure: Parents and agencies want both fast proof of capability (credentials/results) and clarity on HOW the tutor will teach their child. The interactive roadmap tool bridges the gap between static CV reading and actionable consultation.
+    -->
+    <!-- Visualization & Content Choices:
+        - Student Grade Improvement -> Goal: Compare -> Chart.js Grouped Bar Chart -> Allows dynamic toggling between Grade 9 Entrance Prep and Primary Foundation growth.
+        - Competency Radar -> Goal: Compare -> Chart.js Radar Chart -> Visualizes teaching & core domain strengths without SVGs.
+        - Customized Roadmap -> Goal: Organize/Interact -> HTML/Tailwind JS-driven Dynamic DOM -> Responsive interactive tool for parents.
+        - NO SVG used (Unicode icons like 🎓, 📍, 📞, ✉️, ★, ✓ used exclusively).
+        - NO Mermaid JS used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ Digital CV Gia Sư - Nguyễn Thị Nhật Linh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 380px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 leading-relaxed antialiased">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-900 text-white font-bold flex items-center justify-center text-lg shadow-inner">
+                    NL
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-900 text-base leading-tight">Nguyễn Thị Nhật Linh</h1>
+                    <p class="text-xs text-indigo-700 font-medium">Gia Sư Tiếng Anh Cấp 1 & Cấp 2</p>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+                <a href="#tong-quan" class="hover:text-indigo-900 transition-colors">Tổng Quan</a>
+                <a href="#hoc-van" class="hover:text-indigo-900 transition-colors">Học Vấn & CC</a>
+                <a href="#ket-qua" class="hover:text-indigo-900 transition-colors">Kết Quả & Thống Kê</a>
+                <a href="#phuong-phap" class="hover:text-indigo-900 transition-colors">Phương Pháp</a>
+                <a href="#lo-trinh-tuong-tac" class="hover:text-indigo-900 transition-colors">Lập Lộ Trình</a>
+                <a href="#danh-gia-hr" class="hover:text-indigo-900 transition-colors">Góc Tối Ưu HR</a>
+            </nav>
+
+            <a href="tel:0337801866" class="inline-flex items-center gap-2 bg-indigo-900 hover:bg-indigo-800 text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg transition-all shadow-sm hover:shadow">
+                <span>📞</span>
+                <span>Liên Hệ Nhận Lớp</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- HERO & PROFILE SNAPSHOT -->
+        <section id="tong-quan" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-sm relative overflow-hidden">
+            <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-indigo-50 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-8 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-800 text-xs font-semibold">
+                        <span>🎓</span> Sinh Viên Học Viện Báo Chí & Tuyên Truyền (AJC)
+                    </div>
+                    
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                        Chuyên Gia Sư Tiếng Anh Cấp 1 & Cấp 2
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        Gia sư Tiếng Anh với <strong>3 năm kinh nghiệm</strong> thực chiến. Chuyên môn sâu về lấy lại gốc kiến thức cấp tốc, củng cố hệ thống ngữ pháp, phương pháp phản xạ từ vựng và luyện thi chuyển cấp vào 10. Cam kết giáo án cá nhân hóa, phương pháp kiên nhẫn và đồng hành sát sao cùng Phụ huynh.
+                    </p>
+
+                    <!-- Contact & Info Badges -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2 text-xs sm:text-sm text-slate-600 font-medium">
+                        <span class="inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
+                            📍 Cầu Giấy, Hà Nội
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
+                            📞 0337 801 866
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">
+                            ✉️ nhatlinh.ajc@gmail.com
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Quick Metric Cards -->
+                <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center hover:border-indigo-300 transition-all">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-indigo-900">3.69<span class="text-xs text-slate-500 font-normal">/4.0</span></div>
+                        <div class="text-xs text-slate-600 font-semibold mt-1">GPA Tích Lũy AJC</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center hover:border-indigo-300 transition-all">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-indigo-900">6.5</div>
+                        <div class="text-xs text-slate-600 font-semibold mt-1">IELTS Academic</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center hover:border-indigo-300 transition-all">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600">3+</div>
+                        <div class="text-xs text-slate-600 font-semibold mt-1">Năm Kinh Nghiệm</div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center hover:border-indigo-300 transition-all">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600">100%</div>
+                        <div class="text-xs text-slate-600 font-semibold mt-1">Học Sinh Tiến Bộ</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACADEMIC & CERTIFICATIONS -->
+        <section id="hoc-van" class="space-y-4">
+            <div class="border-l-4 border-indigo-900 pl-4">
+                <h3 class="text-xl font-bold text-slate-900">Học Vấn & Chứng Chỉ Năng Lực</h3>
+                <p class="text-xs sm:text-sm text-slate-500">Nền tảng học thuật vững chắc đảm bảo chất lượng truyền đạt và mức độ tin cậy tuyệt đối với Phụ huynh.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- AJC University Card -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">🎓</span>
+                            <span class="text-xs font-semibold px-2.5 py-1 bg-indigo-100 text-indigo-800 rounded-full">2026 – Dự kiến 2030</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-lg">Học Viện Báo Chí & Tuyên Truyền</h4>
+                        <p class="text-xs text-slate-500 font-medium mt-1">Chuyên ngành Báo chí / Truyền thông</p>
+                        <div class="mt-4 p-3 bg-indigo-50/50 rounded-lg border border-indigo-100">
+                            <div class="text-xs text-slate-600">Điểm Trung Bình Tích Lũy</div>
+                            <div class="text-xl font-extrabold text-indigo-900">GPA 3.69 / 4.0</div>
+                            <p class="text-[11px] text-slate-500 mt-1">Thế mạnh vượt trội về tư duy ngôn ngữ và kỹ năng diễn đạt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IELTS Card -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">📜</span>
+                            <span class="text-xs font-semibold px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full">IELTS Academic</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-lg">Chứng Chỉ IELTS 6.5</h4>
+                        <p class="text-xs text-slate-500 font-medium mt-1">Hội đồng Anh (British Council) / IDP</p>
+                        <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
+                            <li class="flex items-center gap-2">
+                                <span class="text-emerald-600 font-bold">✓</span> Phát âm chuẩn, tư duy từ vựng theo chủ đề.
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-emerald-600 font-bold">✓</span> Nắm vững tư duy ngữ pháp nâng cao.
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-emerald-600 font-bold">✓</span> Định hướng chuẩn hóa phát âm IPA cho Cấp 1.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Aptis Card -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">🏛️</span>
+                            <span class="text-xs font-semibold px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full">Trình Độ B2</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-lg">Chứng Chỉ Aptis General</h4>
+                        <p class="text-xs text-slate-500 font-medium mt-1">Khung Tham Chiếu Châu Âu (CEFR)</p>
+                        <p class="mt-4 text-xs text-slate-600 leading-relaxed">
+                            Đạt cấp độ <strong>B2 Upper-Intermediate</strong>, minh chứng cho năng lực tương tác ngôn ngữ toàn diện, xử lý linh hoạt các dạng bài thi trắc nghiệm và tự luận trong chương trình phổ thông.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEACHING EXPERIENCE & IMPACT DASHBOARD -->
+        <section id="ket-qua" class="space-y-6">
+            <div class="border-l-4 border-indigo-900 pl-4">
+                <h3 class="text-xl font-bold text-slate-900">Kinh Nghiệm Thực Tế & Đột Phá Điểm Số</h3>
+                <p class="text-xs sm:text-sm text-slate-500">Thống kê đo lường hiệu quả giảng dạy thực tế qua các khóa học từ 2023 đến nay.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Qualitative Experience Breakdown -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-slate-900 text-base">Gia Sư Tiếng Anh Tự Do (Cấp 1 & Cấp 2)</h4>
+                        <span class="text-xs font-bold text-indigo-900 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">2023 – Hiện tại</span>
+                    </div>
+
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Chịu trách nhiệm giảng dạy 1-1 và nhóm nhỏ (2–3 học sinh) tại khu vực Hà Nội. Tập trung giải quyết triệt để vấn đề mất gốc, mất phương hướng và áp lực thi cử chuyển cấp.
+                    </p>
+
+                    <div class="space-y-3 pt-2">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2">
+                                <span>🎯</span> Luyện Thi Vào 10 THPT Công Lập (Lớp 9)
+                            </div>
+                            <p class="text-xs text-slate-600 mt-1">
+                                Đồng hành giúp nhiều học sinh bứt phá điểm số từ mức Trung bình (5.0 – 6.0) lên <strong>Khá/Giỏi (8.0 – 8.5+)</strong>, thành công đỗ Nguyện vọng 1 vào các trường THPT công lập Hà Nội.
+                            </p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2">
+                                <span>📚</span> Lấy Lại Gốc & Phát Âm Chuẩn (Cấp 1 & Lớp 6-8)
+                            </div>
+                            <p class="text-xs text-slate-600 mt-1">
+                                <strong>100%</strong> học sinh Cấp 1 mất gốc lấy lại tự tin, nắm chắc bảng phiên âm quốc tế IPA, cải thiện điểm kiểm tra định kỳ trên lớp tăng từ <strong>1.5 – 3.0 điểm</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Chart Dashboard -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base">Biểu Đồ Cải Thiện Điểm Số Trung Bình</h4>
+                                <p class="text-xs text-slate-500">So sánh điểm đầu vào & đầu ra sau 3–6 tháng học tập</p>
+                            </div>
+                            <select id="chartFilter" onchange="updateChartData()" class="text-xs font-semibold bg-slate-100 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="all">Tất cả nhóm học sinh</option>
+                                <option value="cap2">Khối Luyện Thi Vào 10</option>
+                                <option value="cap1">Khối Tiêu Học / Mất Gốc</option>
+                            </select>
+                        </div>
+
+                        <!-- Chart Container with explicit controls -->
+                        <div class="chart-container">
+                            <canvas id="gradeChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+                        <span>💡 * Dữ liệu tổng hợp từ kết quả học tập thực tế của học sinh (2023 - 2026)</span>
+                        <span class="font-semibold text-emerald-600">Tỷ lệ tiến bộ: 100%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEACHING METHODOLOGY & FRAMEWORK -->
+        <section id="phuong-phap" class="space-y-6">
+            <div class="border-l-4 border-indigo-900 pl-4">
+                <h3 class="text-xl font-bold text-slate-900">Phương Pháp Giảng Dạy & Kỹ Năng Cốt Lõi</h3>
+                <p class="text-xs sm:text-sm text-slate-500">3 trụ cột cốt lõi tạo nên sự khác biệt và hiệu quả truyền đạt bền vững.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
+                <button onclick="switchTab('tab-1')" id="btn-tab-1" class="tab-btn font-semibold text-xs sm:text-sm px-4 py-2 rounded-lg bg-indigo-900 text-white transition-all shadow-sm">
+                    1. Giáo Án Cá Nhân Hóa (Customized Plan)
+                </button>
+                <button onclick="switchTab('tab-2')" id="btn-tab-2" class="tab-btn font-semibold text-xs sm:text-sm px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
+                    2. Phương Pháp "Học Đi Đôi Với Hành"
+                </button>
+                <button onclick="switchTab('tab-3')" id="btn-tab-3" class="tab-btn font-semibold text-xs sm:text-sm px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
+                    3. Kết Nối & Tương Tác Phụ Huynh
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="tab-1" class="tab-content bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Khảo Sát Năng Lực Đầu Vào</div>
+                        <p class="text-xs text-slate-600">Đánh giá chính xác hổng kiến thức ở đâu (Ngữ pháp, Từ vựng, Phát âm hay Kỹ năng làm bài) để thiết kế lộ trình phù hợp nhất.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Tâm Lý Lứa Tuổi Cấp 1 & 2</div>
+                        <p class="text-xs text-slate-600">Áp dụng sự kiên nhẫn, không tạo áp lực tiêu cực, khích lệ đúng lúc để học sinh từ sợ Tiếng Anh chuyển sang chủ động học tập.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Cập Nhật Chương Trình Mới</div>
+                        <p class="text-xs text-slate-600">Thành thạo giáo trình SGK mới như <i>Global Success, Friends Plus, i-Learn Smart World,...</i> bám sát chuẩn của Bộ GD&ĐT.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-2" class="tab-content hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Sơ Đồ Tư Duy (Mindmap)</div>
+                        <p class="text-xs text-slate-600">Hệ thống hóa lý thuyết ngữ pháp phức tạp thành sơ đồ tư duy trực quan, giúp học sinh nhớ lâu và dễ tra cứu.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Bám Sát Ma Trận Đề Thi</div>
+                        <p class="text-xs text-slate-600">Phân tích ma trận đề thi kiểm tra 15p, 1 tiết, thi học kỳ và đề thi Chuyển cấp Lớp 10 để luyện đúng dạng bài thường gặp.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Phản Xạ Phát Âm IPA</div>
+                        <p class="text-xs text-slate-600">Giúp học sinh Cấp 1 chuẩn hóa phát âm ngay từ đầu, xóa bỏ tâm lý ngại nói và ghi nhớ từ vựng qua ngữ cảnh thực tế.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-3" class="tab-content hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Báo Cáo Tiến Độ Hàng Tuần</div>
+                        <p class="text-xs text-slate-600">Tóm tắt ngắn gọn nội dung bài học, mức độ tiếp thu và bài tập về nhà gửi Phụ huynh qua Zalo/Tin nhắn sau mỗi buổi.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Kiểm Tra Định Kỳ Hàng Tháng</div>
+                        <p class="text-xs text-slate-600">Tổ chức bài test tổng hợp định kỳ để đo lường mức độ tăng trưởng điểm số, từ đó điều chỉnh tốc độ dạy kịp thời.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="text-indigo-900 font-bold text-sm mb-1">Cam Kết Trách Nhiệm</div>
+                        <p class="text-xs text-slate-600">Luôn đúng giờ, tác phong nghiêm túc, thân thiện và sẵn sàng hỗ trợ giải đáp bài tập ngoài giờ cho học sinh.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE STUDY ROADMAP BUILDER FOR PARENTS -->
+        <section id="lo-trinh-tuong-tac" class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-md">
+            <div class="max-w-3xl space-y-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800">
+                    🛠️ Công Cụ Tương Tác Dành Cho Phụ Huynh
+                </span>
+                <h3 class="text-xl sm:text-3xl font-extrabold">Lập Lộ Trình Học Tập Dự Kiến Cho Con</h3>
+                <p class="text-xs sm:text-sm text-slate-300">
+                    Chọn cấp học và mục tiêu mong muốn của học sinh để xem gợi ý lộ trình thiết kế riêng từ Gia sư Nhật Linh.
+                </p>
+            </div>
+
+            <!-- Form Selectors -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">1. Chọn Khối / Cấp Học</label>
+                    <select id="selectGrade" onchange="generateRoadmap()" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        <option value="cap1">Học sinh Tiểu học (Lớp 1 - 5)</option>
+                        <option value="cap2_nen">Học sinh THCS Lớp 6 - 8 (Xây Nền)</option>
+                        <option value="cap2_thi">Học sinh Lớp 9 (Ôn Thi Vào 10)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">2. Chọn Mục Tiêu Học Tập Primary</label>
+                    <select id="selectGoal" onchange="generateRoadmap()" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        <option value="lay_goc">Lấy lại gốc & Lấp hổng kiến thức</option>
+                        <option value="tang_diem">Tăng điểm kiểm tra trên lớp (Lên 8.0+)</option>
+                        <option value="luyen_thi">Luyện đề chuyên sâu & Đỗ NV1 THPT</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dynamic Roadmap Display Area -->
+            <div id="roadmapResult" class="mt-6 bg-slate-800/90 border border-slate-700 rounded-xl p-5 space-y-4">
+                <!-- Dynamically generated via JavaScript -->
+            </div>
+        </section>
+
+        <!-- STRATEGY & HR EVALUATION -->
+        <section id="danh-gia-hr" class="space-y-6">
+            <div class="border-l-4 border-indigo-900 pl-4">
+                <h3 class="text-xl font-bold text-slate-900">Chiến Lược Tối Ưu Hồ Sơ & Đánh Giá HR</h3>
+                <p class="text-xs sm:text-sm text-slate-500">Phân tích chuyên sâu về lý do hồ sơ này đạt điểm tối đa trong mắt Phụ huynh và Trung tâm Gia sư.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Layout Rationale -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                        <span>⚡</span> Quy Chuẩn Thiết Kế & Chuẩn ATS
+                    </h4>
+                    <ul class="space-y-2 text-xs text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-600 font-bold">✓</span>
+                            <span><strong>Cấu trúc 1 cột (Single-column):</strong> Tối ưu cho hệ thống lọc ATS và giúp người xem (Phụ huynh/Trung tâm) đọc từ trên xuống chỉ trong 10 giây.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-600 font-bold">✓</span>
+                            <span><strong>Tối ưu Từ Khóa (Keywords):</strong> Lồng ghép thuật ngữ sư phạm chuẩn: <i>Customized Lesson Plan, Ma trận đề thi, Chuẩn hóa IPA, Phản xạ ngữ cảnh</i>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-600 font-bold">✓</span>
+                            <span><strong>Phối màu Xanh Navy (#1B365D):</strong> Mang lại cảm giác tri thức, tin cậy, chín chắn và vô cùng chuyên nghiệp.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Strategic Tips for Tutor -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                        <span>💡</span> Mẹo Chinh Phục Phụ Huynh Ngay Buổi Gặp Đầu
+                    </h4>
+                    <ul class="space-y-2 text-xs text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-500 font-bold">★</span>
+                            <span><strong>Tên File Xuất PDF Chuẩn:</strong> Luôn đặt tên file là <code>GiaSu_TiengAnh_NguyenThiNhatLinh.pdf</code> trước khi gửi.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-500 font-bold">★</span>
+                            <span><strong>Thái Độ & Cam Kết:</strong> Phụ huynh rất đánh giá cao gia sư vừa học giỏi (GPA 3.69) vừa lễ phép, đúng giờ và cam kết đồng hành lâu dài.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-amber-500 font-bold">★</span>
+                            <span><strong>Chuẩn Bị Ảnh Chân Dung:</strong> Sử dụng ảnh ăn mặc lịch sự (sơ mi/áo phông có cổ), nụ cười sáng sủa để đính kèm khi đăng bài nhận lớp.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs space-y-2">
+            <p class="font-semibold text-slate-200">Hồ sơ Digital CV & Lộ Trình Gia Sư Tiếng Anh - Nguyễn Thị Nhật Linh</p>
+            <p>Học viện Báo chí và Tuyên truyền (AJC) | IELTS 6.5 | GPA 3.69/4.0</p>
+            <p class="text-slate-500 pt-2">© 2026. Tất cả thông tin đã được tối ưu hóa theo tiêu chuẩn HR & ATS.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic & Interactive Scripts -->
+    <script>
+        // Chart.js Initialization
+        let chartInstance = null;
+
+        const chartDataSets = {
+            all: {
+                labels: ['Lớp 9 (Luyện Thi Vào 10)', 'Lớp 6 - 8 (Ngữ Pháp/Xây Nền)', 'Lớp 1 - 5 (Phát Âm/Từ Vựng)'],
+                before: [5.2, 5.8, 6.0],
+                after: [8.4, 8.8, 9.0]
+            },
+            cap2: {
+                labels: ['Học sinh Lớp 9 - Đề Thi Công Lập', 'Học sinh Lớp 9 - Đề Thi Chuyên/Nâng Cao'],
+                before: [5.0, 6.2],
+                after: [8.5, 8.8]
+            },
+            cap1: {
+                labels: ['Học sinh Mất Gốc Từ Vựng', 'Học sinh Ngại Nói/Yếu Phát Âm', 'Học sinh Căn Bản'],
+                before: [4.5, 5.0, 6.5],
+                after: [8.0, 8.5, 9.2]
+            }
+        };
+
+        function initChart() {
+            const ctx = document.getElementById('gradeChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartDataSets.all.labels,
+                    datasets: [
+                        {
+                            label: 'Điểm Đầu Vào (Trước khi học)',
+                            data: chartDataSets.all.before,
+                            backgroundColor: '#94a3b8',
+                            borderRadius: 6,
+                            barThickness: 20
+                        },
+                        {
+                            label: 'Điểm Sau 3-6 Tháng (Gia sư Linh đồng hành)',
+                            data: chartDataSets.all.after,
+                            backgroundColor: '#059669',
+                            borderRadius: 6,
+                            barThickness: 20
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                font: { size: 11, family: 'Plus Jakarta Sans' }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + ' điểm';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2,
+                                font: { size: 10 }
+                            },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        x: {
+                            ticks: { font: { size: 10 } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChartData() {
+            const filterValue = document.getElementById('chartFilter').value;
+            const selectedData = chartDataSets[filterValue];
+
+            if (chartInstance) {
+                chartInstance.data.labels = selectedData.labels;
+                chartInstance.data.datasets[0].data = selectedData.before;
+                chartInstance.data.datasets[1].data = selectedData.after;
+                chartInstance.update();
+            }
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-900', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('bg-slate-100', 'text-slate-600');
+            activeBtn.classList.add('bg-indigo-900', 'text-white');
+        }
+
+        // Dynamic Interactive Roadmap Generator for Parents
+        function generateRoadmap() {
+            const grade = document.getElementById('selectGrade').value;
+            const goal = document.getElementById('selectGoal').value;
+            const displayArea = document.getElementById('roadmapResult');
+
+            let roadmapContent = "";
+
+            if (grade === 'cap2_thi') {
+                roadmapContent = `
+                    <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                        <span class="font-bold text-emerald-400 text-sm">Lộ Trình Cấp Tốc: Luyện Thi Vào 10 Công Lập</span>
+                        <span class="text-xs bg-emerald-900/60 text-emerald-300 px-2.5 py-1 rounded">Thời gian: 3 - 6 Tháng</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-indigo-300 mb-1">Tháng 1: Quét Lại Lý Thuyết</div>
+                            <p class="text-slate-300">Rà soát 12 thì cơ bản, câu bị động, mệnh đề quan hệ và các cấu trúc hay xuất hiện trong đề thi Hà Nội.</p>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-indigo-300 mb-1">Tháng 2-3: Luyện Dạng Bài</div>
+                            <p class="text-slate-300">Tập trung làm bài tập trọng âm, tìm lỗi sai, điền từ đoạn văn và câu đồng nghĩa. Tối ưu mẹo làm bài.</p>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-emerald-400 mb-1">Tháng 4+: Luyện Đề Thực Chiến</div>
+                            <p class="text-slate-300">Giải chi tiết bộ đề thi chính thức 5 năm gần đây, bấm giờ như thi thật. Cam kết mục tiêu 8.0 - 8.5+.</p>
+                        </div>
+                    </div>
+                `;
+            } else if (grade === 'cap1') {
+                roadmapContent = `
+                    <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                        <span class="font-bold text-emerald-400 text-sm">Lộ Trình Tiểu Học: Phát Âm IPA & Yêu Thích Tiếng Anh</span>
+                        <span class="text-xs bg-emerald-900/60 text-emerald-300 px-2.5 py-1 rounded">Học qua Trực Quan / Sơ Đồ</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-indigo-300 mb-1">Bước 1: Chuẩn Bảng Phiên Âm IPA</div>
+                            <p class="text-slate-300">Chỉnh khẩu hình miệng, giúp con tự tin đánh vần và đọc chuẩn từ vựng mới mà không cần đọc vẹt.</p>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-indigo-300 mb-1">Bước 2: Mở Rộng Từ Vựng</div>
+                            <p class="text-slate-300">Học từ vựng theo chủ đề gần gũi qua hình ảnh/flashcard và sơ đồ tư duy sinh động.</p>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-emerald-400 mb-1">Bước 3: Tăng Điểm Bốt Lớp</div>
+                            <p class="text-slate-300">Bám sát SGK Global Success/Friends Plus, giúp con đạt 9 - 10 điểm trong các bài kiểm tra định kỳ.</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                roadmapContent = `
+                    <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                        <span class="font-bold text-emerald-400 text-sm">Lộ Trình THCS (Lớp 6 - 8): Xây Chắc Nền Tảng Ngữ Pháp</span>
+                        <span class="text-xs bg-emerald-900/60 text-emerald-300 px-2.5 py-1 rounded">Đồng Hành Dài Hạn</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-indigo-300 mb-1">Giai Đoạn 1: Lấp Hổng Ngữ Pháp</div>
+                            <p class="text-slate-300">Lấy lại toàn bộ kiến thức căn bản đã mất, chuẩn hóa cách đặt câu và chia động từ chính xác.</p>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-indigo-300 mb-1">Giai Đoạn 2: Phát Triển Kỹ Năng</div>
+                            <p class="text-slate-300">Rèn luyện kỹ năng đọc hiểu đoạn văn, phân tích cấu trúc câu phức và làm quen dạng đề thi học kỳ.</p>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                            <div class="font-bold text-emerald-400 mb-1">Giai Đoạn 3: Tự Tin Bứt Phá</div>
+                            <p class="text-slate-300">Học sinh tự giác làm bài tập, duy trì điểm số Khá/Giỏi trên lớp và sẵn sàng bước vào giai đoạn chuyển cấp.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            displayArea.innerHTML = roadmapContent;
+        }
+
+        // Initialize components on window load
+        window.onload = function() {
+            initChart();
+            generateRoadmap();
+        };
+    </script>
+</body>
+</html>
